@@ -4,12 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --watch **/*.spec.js"
+    "test": "mocha $(find ./ -name '*.spec.js') --recursive --watch "
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mocha": "^4.0.1"
+    "mocha": "^4.0.1",
+    "supertest": "^3.0.0"
   }
 }
