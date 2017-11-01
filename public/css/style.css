@@ -1,0 +1,43 @@
+body {
+    margin: 0;
+    padding: 0;
+}
+ul {
+    list-style: none;
+    padding: 0 0 0 0;
+    margin: 0 0 0 0;
+}
+.container {
+    padding: 0 15px;
+}
+.header {
+    margin-bottom: 30px;
+    border-bottom: 1px gray solid;
+    background-color: #333;
+    color: white;
+}
+.header h1 {
+    margin: 0;
+    padding: 15px 0;
+}
+.header a {
+    color: white;
+    text-decoration: none;
+}
+.header nav {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 10px;
+    line-height: 69px;
+}
+.posts {
+    margin-bottom: 30px;
+}
+.posts ul li {
+    margin-bottom: 30px;
+}
+.pagination ul li {
+    display: inline-block;
+    margin-right: 15px;
+}
