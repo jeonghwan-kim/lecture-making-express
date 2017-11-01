@@ -28,11 +28,8 @@ const Application = () => {
   }
 
   const server = http.createServer((req, res) => {
-    res.setHeader('Content-Type', 'text/plain');    
-    res.statusCode = 200;
-    res.end('Hello World\n');
+    runMw(req, res, middlewares)
   })
-
   
   return {
     // 유닛 테스트 용
