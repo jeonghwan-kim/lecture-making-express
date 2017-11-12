@@ -23,6 +23,11 @@ const Application = () => {
       return mw(req, res, middlewares, i + 1, err)
     } 
    
+    if (mw._path) {
+      if (req.url === mw._path) return mw(req, res, next())
+      return mw(middlewares, i + 1)
+    }
+
     mw(req, res, next())
   }
 
@@ -41,8 +46,15 @@ const Application = () => {
       debug(`listen(${port}, ${domain}, callback)`)
       server.listen(port, domain, callback)
     },
-    use(fn) {
-      if (typeof fn !== 'function') throw Error('middleware should be a funtion')
+    use(path, fn) {
+      if (typeof path === 'string' && typeof fn === 'function') {
+        fn._path = path
+      } else if (typeof path === 'function') {
+        fn = path 
+      } else {
+        throw Error('Usage: use(path, fn) or use(fn)')
+      }
+
       middlewares.push(fn)
     }
   }

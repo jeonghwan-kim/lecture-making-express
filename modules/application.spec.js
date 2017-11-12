@@ -41,6 +41,13 @@ describe('Application', () => {
       app.use((req, res, next) => null)
       assert.equal(app.middlewares.length, 1)
     })
+
+    it('경로와 미들웨어 함수를 함께 받아 내부 스택에 쌓는다', ()=> {
+      const path = '/'
+      const mw = (req, res, next) => null
+      app.use(path, mw)
+      assert(app.middlewares.length, 1)
+    })
   })
 
   describe('runMw()', () => {
@@ -121,5 +128,22 @@ describe('Application', () => {
         assert.equal(spy3.called, true)
       })
     })
+
+    describe('특정 경로에 미들웨어 함수를 설정한 경우', () => {
+      it('요청한 경로와 일치하는 미들웨어만 실행한다', () => {
+        req.path = '/'
+        const spyWillBeCalled = sinon.spy()
+        const spyWillBeNotCalled = sinon.spy()
+        
+        app.use(req.path, spyWillBeCalled)
+        app.use(spyWillBeNotCalled)
+
+        app.runMw(req, res, app.middlewares)
+
+        assert.equal(spyWillBeCalled.called, true)  
+        assert.equal(spyWillBeNotCalled.called, false)  
+      })
+    })
+    
   })
 })
