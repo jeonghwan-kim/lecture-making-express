@@ -16,11 +16,13 @@ const Application = () => {
     if (typeof mw !== 'function') throw Error(`${mw.name} should be function`)
     const next = () => e => runMw(req, res, middlewares, i + 1, e)
 
+    debug('mw.length:', mw.length, 'mw.name:', mw.name, 'err:', err)
+
     if (err) {
       const isErrorMw = mw => mw.length === 4
       if (isErrorMw(mw)) return mw(err, req, res, next())
       
-      return mw(req, res, middlewares, i + 1, err)
+      return runMw(req, res, middlewares, i + 1, err)
     } 
    
     if (mw._path) {

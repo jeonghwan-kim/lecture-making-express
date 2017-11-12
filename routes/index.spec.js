@@ -30,3 +30,15 @@ describe('정의 되지 않은 라우팅일 경우', () => {
       .end(done)
   })
 })
+
+describe('미들웨어에서 에러가 발생하면', () => {
+  it('500 상태코드를 응답한다', done =>{
+    request(server)
+      .get('/error')
+      .expect(500)
+      .expect(res => {
+        assert.equal(res.text, 'error test')
+      })
+      .end(done)
+  })
+})
