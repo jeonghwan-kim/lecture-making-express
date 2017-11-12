@@ -131,11 +131,11 @@ describe('Application', () => {
 
     describe('특정 경로에 미들웨어 함수를 설정한 경우', () => {
       it('요청한 경로와 일치하는 미들웨어만 실행한다', () => {
-        req.path = '/'
+        req.url = '/'
         const spyWillBeCalled = sinon.spy()
         const spyWillBeNotCalled = sinon.spy()
         
-        app.use(req.path, spyWillBeCalled)
+        app.use(req.url, spyWillBeCalled)
         app.use(spyWillBeNotCalled)
 
         app.runMw(req, res, app.middlewares)

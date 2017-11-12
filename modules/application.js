@@ -25,7 +25,7 @@ const Application = () => {
    
     if (mw._path) {
       if (req.url === mw._path) return mw(req, res, next())
-      return mw(middlewares, i + 1)
+      return runMw(req, res, middlewares, i + 1)
     }
 
     mw(req, res, next())
@@ -47,6 +47,8 @@ const Application = () => {
       server.listen(port, domain, callback)
     },
     use(path, fn) {
+      debug('use()', typeof path, typeof fn)
+
       if (typeof path === 'string' && typeof fn === 'function') {
         fn._path = path
       } else if (typeof path === 'function') {
