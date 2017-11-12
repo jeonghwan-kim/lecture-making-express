@@ -9,6 +9,7 @@ const errors = require('./middlewares/errors')
 
 // routes
 const routes = require('./routes/index')
+const apiPost = require('./routes/api/post')
 
 // app
 const app = Application()
@@ -17,6 +18,7 @@ app.use(morgan)
 app.use(serveStatic)
 app.use('/', routes.index)
 app.use('/error', (req, res, next) => next(Error('error test')))
+app.use('/api/posts', apiPost.index)
 app.use(errors.error404)
 app.use(errors.error500)
 
