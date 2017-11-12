@@ -4,7 +4,6 @@ const Application = require('./modules/application')
 
 // middlewares
 const serveStatic = require('./middlewares/serve-static')
-const helloWorld = require('./middlewares/hello-world')
 const morgan = require('./middlewares/morgan')
 
 // routes
