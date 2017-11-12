@@ -13,7 +13,6 @@ const Application = () => {
 
     const mw = middlewares[i]
 
-    debug('mw', i, mw, err, mw.length)
     if (typeof mw !== 'function') throw Error(`${mw.name} should be function`)
     const next = () => e => runMw(req, res, middlewares, i + 1, e)
 
@@ -44,7 +43,6 @@ const Application = () => {
     },
     use(fn) {
       if (typeof fn !== 'function') throw Error('middleware should be a funtion')
-      debug('middlewares2:', middlewares)
       middlewares.push(fn)
     }
   }
