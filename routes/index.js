@@ -14,4 +14,10 @@ const index = (req, res, next) => {
   })
 }
 
-module.exports = index
+const notFound = (req, res, next) => {
+  res.statusCode = 404
+  res.setHeader('Content-Type', 'text/html');
+  res.end('not found')
+}
+
+module.exports = {index, notFound}

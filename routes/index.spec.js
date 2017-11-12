@@ -18,3 +18,15 @@ describe('/', () => {
       .end(done)
   })
 })
+
+describe('정의 되지 않은 라우팅일 경우', () => {
+  it('404 상태코드를 반환', done => {
+    request(server)
+      .get('/notfount')
+      .expect(404)
+      .expect(res => {
+        assert.equal(res.text, 'not found')
+      })
+      .end(done)
+  })
+})

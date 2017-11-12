@@ -14,6 +14,7 @@ const app = Application()
 
 app.use(morgan)
 app.use(serveStatic)
-app.use('/', routes)
+app.use('/', routes.index)
+app.use(routes.notFound)
 
 module.exports = app.server
