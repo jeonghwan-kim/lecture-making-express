@@ -1,6 +1,7 @@
 const http = require('http');
 const path = require('path');
 const fs = require('fs');
+const response = require('./response')
 const debug = require('./debug')('application')
 
 const Application = () => {
@@ -34,7 +35,7 @@ const Application = () => {
   }
 
   const server = http.createServer((req, res) => {
-    runMw(req, res, middlewares)
+    runMw(req, response(res), middlewares)
   })
   
   return {
