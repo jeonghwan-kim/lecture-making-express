@@ -4,9 +4,10 @@ const tag = '[index.js]'
 const onload = () => {
   console.log(tag, 'DOMContentLoaded')
 
-  post.list().
+  post.list(1).
     then(data => {
       renderPosts(data.list)
+      renderPagination(data.pagination)
     }).
     catch(err => {
       console.log(err)

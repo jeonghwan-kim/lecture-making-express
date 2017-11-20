@@ -28,8 +28,8 @@ export const post = {
   create(title, body) {
     return http('post', '/api/posts', `title=${title}&body=${body}`)
   },
-  list() {
-    return http('get', `/api/posts`)
+  list(page) {
+    return http('get', `/api/posts?page=${page}`)
   },
   destroy(id) {
     return http('delete', `/api/posts?id=${id}`)
