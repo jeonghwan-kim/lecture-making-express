@@ -3,6 +3,11 @@ const Response = res => {
     res.setHeader(key, val)
     return res
   }
+
+  res.status = statusCode => {
+    res.statusCode = statusCode
+    return res
+  }
   
   res.send = data => {
     if (!res.getHeader('Content-Type')) {

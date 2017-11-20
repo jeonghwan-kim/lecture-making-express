@@ -18,7 +18,8 @@ describe('Response', () => {
   it('json 함수를 반환한다', () => assert.equal(typeof res.json, 'function'))
   it('set 함수를 반환한다', () => assert.equal(typeof res.set, 'function'))
   it('send 함수를 반환한다', () => assert.equal(typeof res.send, 'function'))
-
+  it('status 함수를 반환한다', () => assert.equal(typeof res.status, 'function'))
+  
   describe('json()', () => {
     it('setHeader("Content-Type", "application/json")을 호출한다', () => {
       res.json()
@@ -62,4 +63,16 @@ describe('Response', () => {
       assert.equal(originRes.end.called, true)
     })
   })
-})
+
+  describe('status()', ()=> {
+    let status
+
+    beforeEach(()=> {
+      status = 200
+      res.status(status)
+    })
+    it('상태코드를 설정한다', () => {
+      assert.equal(originRes.statusCode, status)
+    })
+  })
+});
