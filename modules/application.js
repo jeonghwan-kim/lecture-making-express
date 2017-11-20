@@ -2,6 +2,7 @@ const http = require('http');
 const path = require('path');
 const fs = require('fs');
 const response = require('./response')
+const request = require('./request')
 const debug = require('./debug')('application')
 
 const Application = () => {
@@ -27,7 +28,7 @@ const Application = () => {
     } 
    
     if (mw._path) {
-      if (req.url === mw._path) return mw(req, res, next())
+      if (req.path === mw._path) return mw(req, res, next())
       return runMw(req, res, middlewares, i + 1)
     }
 
@@ -35,7 +36,7 @@ const Application = () => {
   }
 
   const server = http.createServer((req, res) => {
-    runMw(req, response(res), middlewares)
+    runMw(request(req), response(res), middlewares)
   })
   
   return {
