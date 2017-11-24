@@ -144,6 +144,24 @@ describe('Application', () => {
         assert.equal(spyWillBeNotCalled.called, false)  
       })
     })
+
+    describe('app.get()', () => {
+      it('GET 메소드 요청중 일치하는 경로의 미들웨어를 실행한다', () => {
+        req.method = 'get'
+        req.path = '/foo'
+
+        const spyWillBeCalled= sinon.spy()
+        const spyWillBeNotCalled = sinon.spy()
+
+        app.get(req.path, spyWillBeCalled)
+        app.use(req.path, spyWillBeNotCalled)
+        
+        app.runMw(req, res, app.middlewares)
+
+        assert.equal(spyWillBeCalled.called, true)  
+        assert.equal(spyWillBeNotCalled.called, false)  
+      })
+    })
     
   })
 })

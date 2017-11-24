@@ -28,7 +28,17 @@ const Application = () => {
     } 
    
     if (mw._path) {
-      if (req.path === mw._path) return mw(req, res, next())
+      const matched = () => {
+        req.method = req.method || 'get'
+        const matchedMethod = () => req.method.toLowerCase() === (mw._method || 'get')
+        const matchedPath = () => req.path ===mw._path
+        return matchedMethod() && matchedPath()
+      }
+
+      debug(matched, req.method, mw._method, req.path, mw._path)
+      if (matched()) {
+        return mw(req, res, next())
+      }
       return runMw(req, res, middlewares, i + 1)
     }
 
@@ -39,6 +49,31 @@ const Application = () => {
     runMw(request(req), response(res), middlewares)
   })
   
+  const listen =  (port, domain, callback) => {
+    debug(`listen(${port}, ${domain}, callback)`)
+    server.listen(port, domain, callback)
+  }
+
+  const use = (path, fn) => { 
+    debug('use()', typeof path, typeof fn)
+
+    if (typeof path === 'string' && typeof fn === 'function') {
+      fn._path = path
+    } else if (typeof path === 'function') {
+      fn = path 
+    } else {
+      throw Error('Usage: use(path, fn) or use(fn)')
+    }
+
+    middlewares.push(fn)
+  }
+
+  const get = (path, fn) => {
+    if (!path || !fn) throw Error('path and fn is required')
+    fn._method = 'get'
+    use(path, fn)
+  }
+
   return {
     // 유닛 테스트 용
     server,
@@ -46,23 +81,9 @@ const Application = () => {
     runMw,
 
     // API 용 
-    listen(port, domain, callback) {
-      debug(`listen(${port}, ${domain}, callback)`)
-      server.listen(port, domain, callback)
-    },
-    use(path, fn) {
-      debug('use()', typeof path, typeof fn)
-
-      if (typeof path === 'string' && typeof fn === 'function') {
-        fn._path = path
-      } else if (typeof path === 'function') {
-        fn = path 
-      } else {
-        throw Error('Usage: use(path, fn) or use(fn)')
-      }
-
-      middlewares.push(fn)
-    }
+    listen,
+    use,
+    get
   }
 }
 
