@@ -2,6 +2,6 @@ const math = {
   sum(a, b) {
     return a + b;
   }
-}
+};
 
-module.exports = math;
+console.log(math.sum(1, 2));
