@@ -4,10 +4,23 @@ const toNum = (val) => {
   return num || 0
 }
 
-const sum = (a, b) => toNum(a) + toNum(b);
+const math = {
+  sum(a, b) {
+    return toNum(a) + toNum(b);
+  },
+
+  multiply(a, b) {
+    let ret = 0
+    for(let i = 0; i < b; i++) {
+      ret = this.sum(ret, a)
+    }
+    return ret;
+  },
+}
 
 const messages = {
   notNumber: '인자가 Number이거나 숫자형식의 String이어야 함'
-}
+};
 
-module.exports = {sum, messages}
+module.exports = math;
+module.exports.messages = messages;

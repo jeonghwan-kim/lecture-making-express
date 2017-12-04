@@ -1,5 +1,6 @@
 const math = require('./math');
 const assert = require('assert');
+const sinon = require('sinon');
 
 describe('math module', () => {
   describe('sum()', ()=> {
@@ -34,13 +35,16 @@ describe('math module', () => {
     })
   });
 
-  describe('mul()', () => {
+  describe('multiply()', () => {
     it('두 수를 곱한 값을 반환한다', () => {
-      // todo 
+      assert.equal(math.multiply(2,3), 6)
     })
 
     it('sum()를 이용한다', () => {
-      // todo 
+      const spy = sinon.spy(math, 'sum')
+      math.multiply(2,3)
+      assert.equal(spy.callCount, 3)
+      math.sum.restore()
     });
   });
 });
